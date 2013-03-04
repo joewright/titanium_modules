@@ -34,7 +34,7 @@
 	// this method is called when the module is first loaded
 	// you *must* call the superclass
 	[super startup];
-	
+
 	NSLog(@"[INFO] %@ loaded",self);
 }
 
@@ -43,12 +43,12 @@
 	// this method is called when the module is being unloaded
 	// typically this is during shutdown. make sure you don't do too
 	// much processing here or the app will be quit forceably
-	
+
 	// you *must* call the superclass
 	[super shutdown:sender];
 }
 
-#pragma mark Cleanup 
+#pragma mark Cleanup
 
 -(void)dealloc
 {
@@ -88,9 +88,19 @@
         NSLog(@"[ERROR] Unable to create a print interaction controller.");
         return;
     }
+
     controller.showsPageRange = [TiUtils boolValue:[args objectForKey:@"showsPageRange"] def:YES];
     controller.printingItem = url;
-    
+
+    BOOL* isMarkup = [TiUtils boolValue:[args objectForKey:@"isHtml"]];
+    if (isMarkup) {
+        NSLog(@"[INFO] Printing html string.");
+        NSString* html = [args objectForKey:@"html"];
+        controller.printingItem = nil;
+        UIPrintFormatter *formatter = [[UIMarkupTextPrintFormatter alloc] initWithMarkupText:html];
+        controller.printFormatter = formatter;
+    }
+
     NSLog(@"[INFO] Printing out %@", url);
 
     UIPrintInteractionCompletionHandler completionHandler =
