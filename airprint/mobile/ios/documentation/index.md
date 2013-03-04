@@ -28,7 +28,9 @@ Takes one argument, a dictionary with the following keys:
 * url[string]: The URL to an image or PDF. Can be local or remote, but must be accessible to the app.
 * showsPageRange[boolean] (optional): Whether or not to show the page range selector in the popover.
 * view[object] (optional): On the iPad, the object from which the popover should originate.
-* html[boolean] (optional): Print an html file.
+* isHtml [boolean] (optional): Whether or not to print an html string.
+* html [string]: The html string to be printed (set isHtml to true).
+
 ### Ti.AirPrint.canPrint()
 
 Returns whether or not the current device supports printing. Note that a printer does not need to be attached for this to return true.
